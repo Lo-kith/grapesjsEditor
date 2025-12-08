@@ -38,6 +38,7 @@ export const Header = () => {
             className="profile-img"
             alt="profile"
           />
+          
         </div>
       </div>
     </header>

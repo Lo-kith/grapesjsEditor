@@ -1,4 +1,4 @@
-import  Index  from '../layouts/Home'
+import  Index  from '../layouts/Home/Index'
 
 export const Home = () => {
     return (

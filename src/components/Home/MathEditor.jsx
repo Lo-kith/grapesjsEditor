@@ -11,11 +11,11 @@ const MathEditor = () => {
 
   useEffect(() => {
     const mf = new MathfieldElement();
-    mf.setOptions({
-      virtualKeyboardMode: "off",
-      smartMode: true,
-      inlineShortcuts: true,
-    });
+    // mf.setOptions({
+    //   virtualKeyboardMode: "off",
+    //   smartMode: true,
+    //   inlineShortcuts: true,
+    // });
 
     mf.addEventListener("input", () => {
       try {

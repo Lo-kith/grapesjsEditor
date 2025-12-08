@@ -26,57 +26,57 @@ import explainIcon from "../assets/icons/explain.svg?raw";
 // FULL BLOCKS LIST
 // =============================
 
-export const fileMenuItems= [
+export const fileMenuItems = [
   {
     id: "go-to",
     label: "Go to",
     category: "File",
-    media: "GoToIcon", 
-    command: "goTo", 
-    hasSubMenu: true, 
+    media: "GoToIcon",
+    command: "goTo",
+    hasSubMenu: true,
   },
   {
     id: "info",
     label: "Info",
     category: "File",
-    media: "InfoIcon", 
+    media: "InfoIcon",
     command: "showInfo",
   },
   {
     id: "open",
     label: "Open",
     category: "File",
-    media: "OpenIcon", 
+    media: "OpenIcon",
     command: "openFile",
   },
   {
     id: "auto-save",
     label: "Auto Save",
     category: "File",
-    media: "AutoSaveIcon", 
+    media: "AutoSaveIcon",
     command: "toggleAutoSave",
-    toggle: true, 
-    initialState: true, 
+    toggle: true,
+    initialState: true,
   },
   {
     id: "view",
     label: "View",
     category: "File",
-    media: "ViewIcon", 
+    media: "ViewIcon",
     command: "showViewOptions",
   },
   {
     id: "extensions",
     label: "Extensions",
     category: "File",
-    media: "ExtensionsIcon", 
+    media: "ExtensionsIcon",
     command: "showExtensions",
   },
   {
     id: "library",
     label: "Library",
     category: "File",
-    media: "LibraryIcon", 
+    media: "LibraryIcon",
     command: "openLibrary",
   },
 ];
@@ -90,6 +90,8 @@ const blocks = [
     label: "Text",
     category: "Insert",
     media: textIcon,
+    editalbe: true,
+    dragable: true,
     content: { type: "text", content: "Insert your text" },
   },
   {
@@ -97,6 +99,8 @@ const blocks = [
     label: "Table",
     category: "Insert",
     media: tableIcon,
+    editalbe: true,
+    dragable: true,
     content: `
           <table class="table">
             <tr><th>Head 1</th><th>Head 2</th></tr>
@@ -108,6 +112,8 @@ const blocks = [
     id: "heading",
     label: "Heading",
     category: "Insert",
+    editalbe: true,
+    dragable: true,
     media: svgHeading,
     content: "<h1>Heading Text</h1>",
   },
@@ -116,6 +122,8 @@ const blocks = [
     label: "Shape",
     category: "Insert",
     media: shapesIcon,
+    editalbe: true,
+    dragable: true,
     content: `<div style="width:0;height:0;border-left:60px solid transparent;border-right:60px solid transparent;border-bottom:100px solid #f1c40f;"></div>`,
   },
   {
@@ -123,37 +131,62 @@ const blocks = [
     label: "Picture",
     category: "Insert",
     media: pictureIcon,
+    editalbe: true,
+    dragable: true,
     content: { type: "image" },
   },
   {
     id: "audio",
     label: "Audio",
     category: "Insert",
+    editalbe: true,
+    dragable: true,
     media: audioIcon,
     content: `<audio controls><source src="audio-file.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`,
   },
   {
-    id: "video",
-    label: "Video",
+    id: "video-device",
+    content: { type: "video-device" },
     category: "Insert",
     media: videoIcon,
+    editalbe: true,
+    dragable: true,
     content: {
       type: "video",
       src: "https://www.youtube.com/embed/VIDEO_ID",
     },
   },
+  // {
+  //   id: "live-data",
+  //   label: "Live Data",
+  //   category: "Insert",
+  //   media: LiveData,
+  //   editalbe: true,
+  //   dragable: true,
+
+  //   content: `<div class="live-data-stock" style="padding: 10px; border: 1px solid #ccc; background: #f9f9f9; text-align: center;">
+  //           <p style="margin-bottom: 5px; font-weight: bold;">Ticker: FAKE</p>
+  //           <h2 class="stock-price" style="margin: 0; color: #16a085;">$150.45</h2>
+  //           <small class="stock-change" style="color: green;">+2.15 (1.45%)</small>
+  //           <p style="margin-top: 5px; font-size: 10px;">(API integration required for real-time data)</p>
+  //       </div>`
+  //   ,
+  // },
+
   {
-    id: "live-data",
-    label: "Live Data",
+    id: "Live-data",
+    label: "Live-data",
     category: "Insert",
     media: LiveData,
-    content: `<div class="live-data-stock" style="padding: 10px; border: 1px solid #ccc; background: #f9f9f9; text-align: center;">
-            <p style="margin-bottom: 5px; font-weight: bold;">Ticker: FAKE</p>
-            <h2 class="stock-price" style="margin: 0; color: #16a085;">$150.45</h2>
-            <small class="stock-change" style="color: green;">+2.15 (1.45%)</small>
-            <p style="margin-top: 5px; font-size: 10px;">(API integration required for real-time data)</p>
-        </div>`,
+    editalbe: true,
+    dragable: true,
+    content: {
+      type: "Live-data",   // FIXED
+      created: true
+    }
   },
+
+
 
   // Equation Block (For LaTeX)
   {
@@ -161,6 +194,8 @@ const blocks = [
     label: "Equation",
     category: "Insert",
     media: mathIcon,
+    editalbe: true,
+    dragable: true,
     content: {
       type: "equation",
       // placeholder content — the actual latex will be added via modal
@@ -172,6 +207,8 @@ const blocks = [
     id: "qa-block",
     label: "Q & A",
     category: "Insert",
+    editalbe: true,
+    dragable: true,
     media: QAIcon,
     content: `
         <div class="qa-block" style="padding: 15px; border: 1px dashed #9b59b6; background: #f5eef8;">
@@ -192,6 +229,8 @@ const blocks = [
     label: "Explanation",
     category: "Insert",
     media: explainIcon,
+    editalbe: true,
+    dragable: true,
     content: `
         <div class="explanation-block" style="padding: 15px; border: 1px dashed #e67e22; background: #fff4e6;">
             <p style="font-weight: bold; margin-bottom: 10px;">Explanation:</p>
@@ -206,6 +245,8 @@ const blocks = [
     id: "quote",
     label: "Quote",
     category: "Insert",
+    editalbe: true,
+    dragable: true,
     media: svgQuote,
     content: "<blockquote>Quote text here</blockquote>",
   },
@@ -216,6 +257,8 @@ const blocks = [
     label: "1 Column",
     category: "Insert",
     media: svgColumn,
+    editalbe: true,
+    dragable: true,
     content: {
       type: "div",
       classes: ["row"],
@@ -230,10 +273,12 @@ const blocks = [
     },
   },
   {
-    id: "2column",
-    label: "2 Columns",
+    id: "two-column",
+    content: { type: "two-column" },
     category: "Insert",
     media: svgColumn,
+    editalbe: true,
+    dragable: true,
     content: {
       type: "div",
       classes: ["row"],
@@ -258,6 +303,8 @@ const blocks = [
     label: "3 Columns",
     category: "Insert",
     media: svgColumn,
+    editalbe: true,
+    dragable: true,
     content: {
       type: "div",
       classes: ["row"],
@@ -284,14 +331,7 @@ const blocks = [
     },
   },
   // --- NEW: Spacing Block ---
-  {
-    id: "spacing-block",
-    label: "Spacing",
-    category: "Insert",
-    media: svgSpacing,
-    content: `<div style="height: 20px; background: rgba(0,0,0,0.05); border: 1px dashed rgba(0,0,0,0.2); user-select: none;"></div>`,
-    // NOTE: For best UX, you should make this component resizeable vertically
-  },
+
 
   // MEDIA (Keep as is)
   {
@@ -323,6 +363,8 @@ const blocks = [
     id: "geometry-block",
     label: "Geometry",
     category: "Insert",
+    editalbe: true,
+    dragable: true,
     media: svgGeometry,
     content: `
             <div class="geometry-viewer" style="width: 100%; height: 300px; padding: 10px; border: 1px dashed #3498db; background: #f0f4f7; text-align: center;">
@@ -343,6 +385,26 @@ const blocks = [
       type: "yjs-collab",
     },
   },
+
+
+  {
+    id: "3d-object",
+    label: "3d Object",
+    category: "Insert",
+    editalbe: true,
+    dragable: true,
+    media: svgGeometry,
+    content: {
+      type: "three-device",
+      attributes: {
+        src: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"
+      },
+    }
+  },
+
+
+
+
 ];
 
 export default blocks;

@@ -9,6 +9,10 @@ import { fileMenuItems } from "./blocks";
 import rulerConfig from "./ruler";
 import { enableYjsLocalSave } from "./yjs-local";
 import rulers from "grapesjs-rulers";
+import '../Logics/LiveData'
+import ThreeDObject from "../Logics/3DObject";
+
+import registerWeatherComponent from '../Logics/LiveData'
 
 let editorInstance = null;
 
@@ -47,8 +51,14 @@ const initEditor = () => {
     },
 
     panels: { defaults: [] },
-  }); // Enable YJS collaboration
+  }); 
+  
+ 
+  ThreeDObject(editorInstance);
+  registerWeatherComponent(editorInstance);
 
+  
+  // Enable YJS collaboration
   setTimeout(() => {
     enableYjsLocalSave(editorInstance);
   }, 100); // Add YJS Collaboration Block
@@ -142,19 +152,78 @@ const initEditor = () => {
   const panelViews = pn.addPanel({ id: "options" });
 
   panelViews.get("buttons").add([
-    {
-      id: "ruler-visibility",
-      active: 1,
-      attributes: { title: "Toggle Rulers" },
-      context: "toggle-rulers",
-      command: "ruler-visibility",
-      label: `
-        <svg width="18" viewBox="0 0 16 16">
-          <path d="M0 8a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5A.5.5 0 0 1 0 8z"/>
-        </svg>
-      `,
-    },
+//     {
+//       id: "ruler-visibility",
+//       active: 1,
+//       attributes: { title: "Toggle Rulers" },
+//       context: "toggle-rulers",
+//       command: "ruler-visibility",
+//       label: `
+//         <svg width="18" viewBox="0 0 16 16">
+//           <path d="M0 8a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5A.5.5 0 0 1 0 8z"/>
+//         </svg>
+//       `,
+//     },
+  
+
+
+  {
+    id: "save-project",
+    attributes: { title: "Save Project" },
+    command: "save-project",
+    label: `
+      💾
+    `,
+  },
+  {
+    id: "export-project",
+    attributes: { title: "Export Project" },
+    command: "export-project",
+    label: `
+      📤
+    `,
+  },
+  {
+    id: "import-project",
+    attributes: { title: "Import Project" },
+    command: "import-project",
+    label: `
+      📥
+    `,
+  }
+    
   ]);
+
+  editorInstance.DomComponents.getType('weather')
+  // other
+  editorInstance.Commands.add("save-project", {
+  run() {
+    const data = editorInstance.getProjectData();
+    localStorage.setItem("MyPage", JSON.stringify(data));
+    alert("Saved Successfully!");
+  }
+});
+
+editorInstance.Commands.add("export-project", {
+  run() {
+    const data = editorInstance.getProjectData();
+    const jsonString = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "full-design.json";
+    a.click();
+  }
+});
+
+editorInstance.Commands.add("import-project", {
+  run() {
+    document.getElementById("jsonInput").click();
+  }
+});
+
+
 
   return editorInstance;
 };
