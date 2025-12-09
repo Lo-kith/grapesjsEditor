@@ -85,29 +85,27 @@ const blocks = [
   // Yjs Collaboration (Keep as is)
 
   // Standard Blocks (Keep as is)
+  // TEXT
   {
     id: "text",
     label: "Text",
     category: "Insert",
-    media: textIcon,
-    editalbe: true,
-    dragable: true,
-    content: { type: "text", content: "Insert your text" },
+    media: "<svg viewBox='0 0 24 24' style='width:18px;height:18px'><path fill='currentColor' d='M3 4V20H5V13H11V20H13V4H11V11H5V4H3Z'/></svg>",
+    content: { type: "text", components: "Insert your text" },
   },
-  {
+ {
     id: "table",
     label: "Table",
     category: "Insert",
-    media: tableIcon,
-    editalbe: true,
-    dragable: true,
+    media: "<svg viewBox='0 0 24 24' style='width:18px;height:18px'><rect x='3' y='4' width='18' height='16' fill='currentColor'/></svg>",
     content: `
-          <table class="table">
-            <tr><th>Head 1</th><th>Head 2</th></tr>
-            <tr><td>Cell 1</td><td>Cell 2</td></tr>
-          </table>
-        `,
+      <table class="table" style="width:100%">
+        <tr><th>Head 1</th><th>Head 2</th></tr>
+        <tr><td>Cell 1</td><td>Cell 2</td></tr>
+      </table>
+    `,
   },
+
   {
     id: "heading",
     label: "Heading",
@@ -126,22 +124,18 @@ const blocks = [
     dragable: true,
     content: `<div style="width:0;height:0;border-left:60px solid transparent;border-right:60px solid transparent;border-bottom:100px solid #f1c40f;"></div>`,
   },
-  {
+   {
     id: "image",
     label: "Picture",
     category: "Insert",
-    media: pictureIcon,
-    editalbe: true,
-    dragable: true,
-    content: { type: "image" },
+    media: "<svg viewBox='0 0 24 24' style='width:18px;height:18px'><path fill='currentColor' d='M21 19V5C21 3.89 20.1 3 19 3H5C3.9 3 3 3.89 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19M8.5 13.5L11 16.5L14.5 12L19 18H5L8.5 13.5Z'/></svg>",
+    content: { type: "my-image" },
   },
   {
     id: "audio",
     label: "Audio",
     category: "Insert",
-    editalbe: true,
-    dragable: true,
-    media: audioIcon,
+    media: "<svg viewBox='0 0 24 24' style='width:18px;height:18px'><path fill='currentColor' d='M12 3v18c4.97 0 9-4.03 9-9s-4.03-9-9-9z'/></svg>",
     content: `<audio controls><source src="audio-file.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`,
   },
   {
@@ -189,19 +183,19 @@ const blocks = [
 
 
   // Equation Block (For LaTeX)
-  {
-    id: "equation-block",
-    label: "Equation",
-    category: "Insert",
-    media: mathIcon,
-    editalbe: true,
-    dragable: true,
-    content: {
-      type: "equation",
-      // placeholder content — the actual latex will be added via modal
-      components: `<div class="math-placeholder" contenteditable="false">Double-click or drop to edit equation</div>`,
-    },
-  },
+ {
+  id: "equation",
+  label: "Equation",
+  category: "Insert",
+  media: mathIcon,
+  editable: true,
+  draggable: true,
+  content: {
+    type: "math-component",
+    latex: "\\frac{a}{b}",
+    attributes: { "data-latex": "\\frac{a}{b}" }
+  }
+},
 
   {
     id: "qa-block",
@@ -256,6 +250,7 @@ const blocks = [
     id: "1column",
     label: "1 Column",
     category: "Insert",
+    tagName:'div',attribute:{class:'one -col'},droppable:true,
     media: svgColumn,
     editalbe: true,
     dragable: true,
@@ -272,32 +267,33 @@ const blocks = [
       ],
     },
   },
-  {
-    id: "two-column",
-    content: { type: "two-column" },
-    category: "Insert",
-    media: svgColumn,
-    editalbe: true,
-    dragable: true,
-    content: {
-      type: "div",
-      classes: ["row"],
-      components: [
-        {
-          type: "div",
-          classes: ["col-6"],
-          droppable: true,
-          components: [{ type: "text", content: "Left" }],
-        },
-        {
-          type: "div",
-          classes: ["col-6"],
-          droppable: true,
-          components: [{ type: "text", content: "Right" }],
-        },
-      ],
-    },
-  },
+
+  // Two column add for with fixed-"No-bug"
+{
+  id: "two-columns",
+  label: "2 Columns",
+  category: "Insert",
+  media:svgColumn,
+  editalbe:true,
+  content: {
+    tagName: "div",
+    classes: ["row"],
+    components: [
+      {
+        tagName: "div",
+        classes: ["col"],
+        droppable: true,
+        components: "Column 1"
+      },
+      {
+        tagName: "div",
+        classes: ["col"],
+        droppable: true,
+        components: "Column 2"
+      }
+    ]
+  }
+},
   {
     id: "3column",
     label: "3 Columns",
@@ -386,20 +382,19 @@ const blocks = [
     },
   },
 
-
   {
     id: "3d-object",
-    label: "3d Object",
+    label: "3D Object",
     category: "Insert",
-    editalbe: true,
-    dragable: true,
-    media: svgGeometry,
+    media: "<svg viewBox='0 0 24 24' style='width:18px;height:18px'><path fill='currentColor' d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>",
     content: {
       type: "three-device",
+      // optional: initial attribute for embedded model
       attributes: {
-        src: "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb"
+        src:
+          "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb",
       },
-    }
+    },
   },
 
 

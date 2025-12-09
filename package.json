@@ -19,6 +19,7 @@
     "grapesjs-preset-webpage": "^1.0.3",
     "grapesjs-rulers": "^1.0.8",
     "grapesjs-script-editor": "^1.0.4",
+    "katex": "^0.16.27",
     "mathlive": "^0.108.2",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
