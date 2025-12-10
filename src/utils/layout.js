@@ -9,10 +9,10 @@ import { fileMenuItems } from "./blocks";
 import rulerConfig from "./ruler";
 import { enableYjsLocalSave } from "./yjs-local";
 import rulers from "grapesjs-rulers";
-import '../Logics/LiveData'
+import "../Logics/LiveData";
 import ThreeDObject from "../Logics/3DObject";
 import Mathtype from "../Logics/Mathtype";
-import registerWeatherComponent from '../Logics/LiveData'
+import registerWeatherComponent from "../Logics/LiveData";
 import MyImage from "../Logics/Image";
 
 let editorInstance = null;
@@ -24,18 +24,15 @@ const initEditor = () => {
     container: ".layout-body",
     noticeOnUnload: false,
     fromElement: false,
-    // storageManager: false,
     width: "100%",
     canvas: {
       styles: [
         "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
       ],
-      // If you need model-viewer for 3D previews:
       scripts: ["https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"],
     },
 
     plugins: [
-      // MyImage can be a plugin function; if it expects to be passed as plugin, keep here.
       MyImage,
       presetWebpage,
       scriptEditor,
@@ -58,32 +55,24 @@ const initEditor = () => {
     panels: { defaults: [] },
   });
 
-  // Register Mathtype (math-component + math-block)
+  // Register MathType
   Mathtype(editorInstance);
 
-
-  // Register image plugin manually if your MyImage export expects direct call
-  // If MyImage is already included as a plugin (above), you can skip this call.
-  // Uncomment the following line only if MyImage is NOT already registered via plugins.
-  // MyImage(editorInstance);
-
-  // 3D block
+  // 3D Object plugin
   if (typeof ThreeDObject === "function") ThreeDObject(editorInstance);
 
-  // weather Block registration
-  if (typeof registerWeatherComponent === "function") registerWeatherComponent(editorInstance);
+  // Weather plugin
+  if (typeof registerWeatherComponent === "function")
+    registerWeatherComponent(editorInstance);
 
-  // Enable YJS collaboration (optional)
+  // Enable YJS save
   setTimeout(() => {
     try {
       enableYjsLocalSave(editorInstance);
-    } catch (e) {
-      // ignore if YJS not configured
-      // console.warn("YJS local save failed:", e);
-    }
+    } catch (e) {}
   }, 100);
 
-  // Add yjs-collab component for UI notice
+  // YJS notice block
   editorInstance.Components.addType("yjs-collab", {
     model: {
       defaults: {
@@ -104,7 +93,7 @@ const initEditor = () => {
     },
   });
 
-  // Panels buttons
+  // Panels
   const pn = editorInstance.Panels;
   const panelViews = pn.addPanel({ id: "options" });
   panelViews.get("buttons").add([
@@ -167,8 +156,21 @@ const initEditor = () => {
     },
   });
 
-  // Clean up any remaining references to old 'equation' handlers: do NOT add any 'component:add' or dblclick handlers for 'equation'
+  // -------------------------------------------------
+  // 🚀 FIX ADDED: Auto-open Math Keyboard on Drag
+  // -------------------------------------------------
+  editorInstance.on("component:add", (comp) => {
+    if (comp.get("type") === "math-component") {
+      setTimeout(() => {
+        const editTrait = comp.getTraits().find((t) => t.name === "edit-math");
+        if (editTrait && editTrait.command) {
+          editTrait.command(editorInstance);
+        }
+      }, 150);
+    }
+  });
 
   return editorInstance;
 };
+
 export default initEditor;

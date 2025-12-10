@@ -4,7 +4,7 @@ export default function Mathtype(editorInstance) {
 
   // Ensure katex and mathlive are loaded in page (caller should include scripts)
   // Add math-component
-  editorInstance.Components.addType("math-component", {
+  editorInstance.Components.addType("equation", {
     model: {
       defaults: {
         tagName: "div",
@@ -37,8 +37,8 @@ export default function Mathtype(editorInstance) {
             label: "Edit Math",
             name: "edit-math",
             // this command runs inside the editor context (not the canvas script)
-            command: (editorInst) => {
-              const comp = editorInst.getSelected();
+            command: (editorInstance) => {
+              const comp = editorInstance.getSelected();
               if (!comp) return;
 
               // build modal content
@@ -55,7 +55,7 @@ export default function Mathtype(editorInstance) {
                 </div>
               `;
 
-              editorInst.Modal.open({
+              editorInstance.Modal.open({
                 title: "Edit Math",
                 content: container,
                 attributes: { class: "math-editor-modal" },
@@ -63,7 +63,7 @@ export default function Mathtype(editorInstance) {
 
               // handle cancel
               container.querySelector("#cancelMath").onclick = () => {
-                editorInst.Modal.close();
+                editorInstance.Modal.close();
               };
 
               // handle save
@@ -84,10 +84,10 @@ export default function Mathtype(editorInstance) {
                     outputEl.textContent = newLatex;
                   }
                 } catch (err) {
-                  // ignore
+                  console.log("error on mathtype")
                 }
 
-                editorInst.Modal.close();
+                editorInstance.Modal.close();
               };
             },
           },
@@ -136,8 +136,8 @@ export default function Mathtype(editorInstance) {
   });
 
   // add math block
-  editorInstance.BlockManager.add("math-block", {
-    label: "Math",
+  editorInstance.BlockManager.add("equation", {
+    label: "Equation",
     category: "Insert",
     content: {
       type: "math-component",

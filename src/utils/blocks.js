@@ -21,6 +21,7 @@ import mathIcon from "../assets/icons/math.svg?raw";
 import LiveData from "../assets/icons/live.svg?raw";
 import QAIcon from "../assets/icons/QA.svg?raw";
 import explainIcon from "../assets/icons/explain.svg?raw";
+import { label } from "three/tsl";
 
 // =============================
 // FULL BLOCKS LIST
@@ -97,7 +98,7 @@ const blocks = [
     id: "table",
     label: "Table",
     category: "Insert",
-    media: "<svg viewBox='0 0 24 24' style='width:18px;height:18px'><rect x='3' y='4' width='18' height='16' fill='currentColor'/></svg>",
+    media: tableIcon,
     content: `
       <table class="table" style="width:100%">
         <tr><th>Head 1</th><th>Head 2</th></tr>
@@ -140,6 +141,7 @@ const blocks = [
   },
   {
     id: "video-device",
+    label:"Video",
     content: { type: "video-device" },
     category: "Insert",
     media: videoIcon,
@@ -182,7 +184,7 @@ const blocks = [
 
 
 
-  // Equation Block (For LaTeX)
+  // Equation Block 
  {
   id: "equation",
   label: "Equation",
@@ -275,6 +277,7 @@ const blocks = [
   category: "Insert",
   media:svgColumn,
   editalbe:true,
+  dragable:true,
   content: {
     tagName: "div",
     classes: ["row"],
